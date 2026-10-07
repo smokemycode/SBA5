@@ -55,3 +55,29 @@ function loadPosts() {
     posts = [];
   }
 }
+
+// Render the list of posts in the DOM.
+function renderPosts() {
+  postsContainer.innerHTML = "";
+  if (posts.length === 0) {
+    noPostsMsg.style.display = "block";
+    return;
+  }
+  noPostsMsg.style.display = "none";
+  posts.forEach(post => {
+    const card = document.createElement("article");
+    card.className = "post";
+    card.dataset.id = post.id;
+
+    card.innerHTML = `
+      <h3>${escapeHtml(post.title)}</h3>
+      <p class="post-meta">${formatDate(post.timestamp)}</p>
+      <p class="post-content">${escapeHtml(post.content)}</p>
+      <div class="post-actions">
+        <button class="edit-btn" data-action="edit" data-id="${post.id}">Edit</button>
+        <button class="delete-btn" data-action="delete" data-id="${post.id}">Delete</button>
+      </div>
+    `;
+    postsContainer.appendChild(card);
+  });
+}
