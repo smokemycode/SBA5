@@ -117,3 +117,39 @@ function validateForm() {
 
   return isValid;
 }
+
+// Form submission handler: either create a new post or update an existing one.
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const title = titleInput.value;
+  const content = contentInput.value;
+
+  // Validate and return if invalid
+  if (!validateForm(title, content)) return;
+
+  if (editingId) {
+    // Update existing post
+    const post = posts.findIndex((p) => p.id === editingId);
+    if (post) {
+      post.title = title.trim();
+      post.content = content.trim();
+      post.timestamp = new Date().toISOString();
+    }
+    exitEditMode();
+  } else {
+    // Create new post
+    const newPost = {
+      id: generateId(),
+      title: title.trim(),
+      content: content.trim(),
+      timestamp: new Date().toISOString(),
+    };
+    posts.push(newPost);
+  }
+
+  savePosts();
+  renderPosts();
+  form.reset();
+  clearErrors();
+});
