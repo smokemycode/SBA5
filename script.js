@@ -153,3 +153,30 @@ form.addEventListener("submit", (event) => {
   form.reset();
   clearErrors();
 });
+
+// Switch the form into edit mode for a specific post.
+function enterEditMode(postId) {
+  const post = posts.find((p) => p.id === postId);
+  if (!post) return;
+
+  editingId = postId;
+  titleInput.value = post.title;
+  contentInput.value = post.content;
+  editingIdInput.value = postId;
+
+  submitBtn.textContent = "Update Post";
+  cancelBtn.classList.remove("hidden");
+
+  form.scrollIntoView({ behavior: "smooth", block: "start" });
+  titleInput.focus();
+}
+
+// Switch the form back to create mode, clearing any edit state.
+function exitEditMode() {
+  editingId = null;
+  editingIdInput.value = "";
+  submitBtn.textContent = "Add Post";
+  cancelBtn.classList.add("hidden");
+  form.reset();
+  clearErrors();
+}
