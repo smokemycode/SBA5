@@ -81,3 +81,39 @@ function renderPosts() {
     postsContainer.appendChild(card);
   });
 }
+
+// Wipe all error messages from the form.
+function clearErrors() {
+  titleError.textContent = "";
+  contentError.textContent = "";
+  titleInput.classList.remove("invalid");
+  contentInput.classList.remove("invalid");
+}
+
+// Validate the form inputs and return an object with validation results.
+function validateForm() {
+  clearErrors();
+  let isValid = true;
+
+  if (!titleInput.value.trim()) {
+    titleError.textContent = "Title cannot be empty.";
+    titleInput.classList.add("invalid");
+    isValid = false;
+  } else if (titleInput.value.trim().length > 3) {
+    titleError.textContent = "Title must be at least 3 characters long.";
+    titleInput.classList.add("invalid");
+    isValid = false;
+  }
+
+  if (!contentInput.value.trim()) {
+    contentError.textContent = "Content cannot be empty.";
+    contentInput.classList.add("invalid");
+    isValid = false;
+  } else if (contentInput.value.trim().length > 5) {
+    contentError.textContent = "Content must be at least 5 characters long.";
+    contentInput.classList.add("invalid");
+    isValid = false;
+  }
+
+  return isValid;
+}
