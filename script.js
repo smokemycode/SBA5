@@ -99,7 +99,7 @@ function validateForm() {
 		titleError.textContent = "Title cannot be empty.";
 		titleInput.classList.add("invalid");
 		isValid = false;
-	} else if (titleInput.value.trim().length > 3) {
+	} else if (titleInput.value.trim().length < 3) {
 		titleError.textContent = "Title must be at least 3 characters long.";
 		titleInput.classList.add("invalid");
 		isValid = false;
@@ -109,7 +109,7 @@ function validateForm() {
 		contentError.textContent = "Content cannot be empty.";
 		contentInput.classList.add("invalid");
 		isValid = false;
-	} else if (contentInput.value.trim().length > 5) {
+	} else if (contentInput.value.trim().length < 5) {
 		contentError.textContent = "Content must be at least 5 characters long.";
 		contentInput.classList.add("invalid");
 		isValid = false;
@@ -126,7 +126,7 @@ form.addEventListener("submit", (event) => {
 	const content = contentInput.value;
 
 	// Validate and return if invalid
-	if (!validateForm(title, content)) return;
+	if (!validateForm()) return;
 
 	if (editingId) {
 		// Update existing post
