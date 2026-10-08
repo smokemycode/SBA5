@@ -180,3 +180,42 @@ function exitEditMode() {
   form.reset();
   clearErrors();
 }
+
+// Handle clicks on edit and delete buttons using event delegation.
+postsContainer.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-action]");
+  if (!button) return;
+
+  const action = button.dataset.action;
+  const postId = button.dataset.id;
+
+  if (action === "edit") {
+    enterEditMode(postId);
+  } else if (action === "delete") {
+    deletePost(postId);
+  }
+});
+
+// Delete a post by its id and update the UI.
+function deletePost(postId) {
+  const post = posts.find((p) => p.id === postId);
+  if (!post) return;
+
+  const confirmed = confirm(`Delete "${post.title}"? This cannot be undone.`);
+  if (!confirmed) return;
+
+  posts = posts.filter((p) => p.id !== postId);
+  
+  savePosts();
+  renderPosts();
+
+  if (editingId === postId) {
+    exitEditMode();
+  } 
+}
+
+// Cancel button handler to exit edit mode.
+cancelBtn.addEventListener("click", () => {
+  event.preventDefault();
+  exitEditMode();
+});
