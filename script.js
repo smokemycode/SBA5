@@ -219,3 +219,12 @@ cancelBtn.addEventListener("click", () => {
   event.preventDefault();
   exitEditMode();
 });
+
+// Initialize the application: load posts and render them.
+function init() {
+  loadPosts();
+  renderPosts();
+}
+
+// Wait for the DOM to be fully parsed before running anything.
+document.addEventListener("DOMContentLoaded", init);
